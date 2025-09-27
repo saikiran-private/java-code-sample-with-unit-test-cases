@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Jenkins automatically checks out the repo, but this ensures clarity
+                git url: 'git url: 'https://github.com/Ramesh-Gt966/java-code-sample-with-unit-test-cases.git', branch: 'main', branch: 'main'
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                // Use 'bat' if Jenkins is running on Windows
+                sh 'mvn clean test'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
+        success {
+            echo 'Build and tests succeeded!'
+        }
+        failure {
+            echo 'Build or tests failed. Check console output for details.'
+        }
+    }
+}
